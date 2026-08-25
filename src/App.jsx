@@ -1,5 +1,6 @@
 // Hooks useEffect e useState
 import { useState, useEffect } from "react"
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
   //Crie duas const para guardar e carregar tarefas..
@@ -16,25 +17,32 @@ function App() {
   }, []) // Array vazio para ececutar apenas uma vez ao abrir a tela
 
   return (
-    <>
-      <div>
-        <div>
-          <h2>Tarefas vindas da API</h2>
-          <p>Consumindo dados de JSONPlaceholder via fetch e useEffect</p>
+    <main className="container py-4">
+      <h1 className="h2 mb-1">Tarefas</h1>
+      <p className="text-secondary mb-4">Tarefas vindas da API</p>
+
+      <section className="card shadow-sm">
           {carregando ? (
-            <div>Carregando...</div>
+            <div className="d-flex justify-content-center align-items-center gap-2 p-5 text-secondary">
+              <div className="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true" />
+              <span>Carregando tarefas...</span>
+            </div>
           ) : (
-            <ul>
+            <ul className="list-group list-group-flush">
               {tarefas.map((item) => (
-                <li key={item.id}> {item.title}
-                  {item.completed ? ' Concluído' : 'Pendente'}
+                <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center gap-3 px-4 py-3">
+                  <span className={item.completed ? 'text-decoration-line-through text-secondary' : ''}>
+                    {item.title}
+                  </span>
+                  <span className={`badge rounded-pill ${item.completed ? 'text-bg-success' : 'text-bg-warning'}`}>
+                    {item.completed ? 'Concluída' : 'Pendente'}
+                  </span>
                 </li>
               ))}
             </ul>
           )}
-        </div>
-      </div>
-    </>
+      </section>
+    </main>
   )
 }
 
